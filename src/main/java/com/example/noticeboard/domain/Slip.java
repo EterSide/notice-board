@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Slip {
 
@@ -12,12 +15,18 @@ public class Slip {
     private Long id = null;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JoinColumn(name = "snd_user_id")
+    private User sndUser;
+
+    @ManyToOne
+    @JoinColumn(name = "rcv_user_id")
+    private User rcvUser;
 
     private String content;
 
     @CreationTimestamp
     private LocalDateTime time;
+
 
     protected Slip() {
 

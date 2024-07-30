@@ -15,7 +15,7 @@ public class UserService {
     }
 
     public long addUser(UserAddRequest request) {
-        User user = userRepository.save(new User(request.getUserId(), request.getUserName(), request.getEmail(), request.getPassword()));
+        User user = userRepository.save(new User(request.getUserId(), request.getPassword(), request.getEmail(), request.getUserName()));
         return user.getId();
     }
 

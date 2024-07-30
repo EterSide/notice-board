@@ -4,6 +4,7 @@ import com.example.noticeboard.domain.Comment;
 import com.example.noticeboard.domain.Post;
 import com.example.noticeboard.dto.request.PostAddRequest;
 import com.example.noticeboard.dto.request.UserAddRequest;
+import com.example.noticeboard.dto.response.PostResponse;
 import com.example.noticeboard.service.PostService;
 import com.example.noticeboard.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -29,25 +30,20 @@ public class MainController {
     }
 
     @GetMapping("post")
-    public List<Post> getAllPosts() {
+    public List<PostResponse> getAllPosts() {
         return postService.getAllPosts();
     }
+
     @GetMapping("post/search")
-    public List<Post> getSearchPosts(
+    public List<PostResponse> getSearchPosts(
             @RequestParam String searchType,
-            @RequestBody String keyword
+            @RequestParam String keyword
                                     )
     {
         return postService.getSearchPosts(searchType, keyword);
     }
 
-    @PostMapping("post/add")
-    public Long addPost(
-            @RequestPart(name = "request") PostAddRequest request,
-            @RequestPart(required = false, name = "imageFile") MultipartFile imageFile
-    ) throws IOException {
-        return postService.addPost(request, imageFile);
-    }
+
 
 
 }
