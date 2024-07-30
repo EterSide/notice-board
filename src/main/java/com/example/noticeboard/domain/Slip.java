@@ -11,7 +11,7 @@ public class Slip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     private String content;
