@@ -1,6 +1,7 @@
 package com.example.noticeboard.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Post {
 
     @Id
@@ -34,7 +36,10 @@ public class Post {
 
     }
 
-
-
-
+    public Post(String imageUrl, User user, String content, String title) {
+        this.imageUrl = imageUrl;
+        this.user = user;
+        this.content = content;
+        this.title = title;
+    }
 }
