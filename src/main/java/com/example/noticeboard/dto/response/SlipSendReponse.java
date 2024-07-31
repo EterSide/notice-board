@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class SlipReponse {
+public class SlipSendReponse {
 
     private Long slipId;
     private Long sndId;
@@ -13,7 +13,7 @@ public class SlipReponse {
     private String content;
     private LocalDateTime sentAt;
 
-    public SlipReponse(Long slipId, Long sndId, Long rcvId, String content, LocalDateTime sentAt) {
+    public SlipSendReponse(Long slipId, Long sndId, Long rcvId, String content, LocalDateTime sentAt) {
         this.slipId = slipId;
         this.sndId = sndId;
         this.rcvId = rcvId;
