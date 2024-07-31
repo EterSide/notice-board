@@ -46,9 +46,12 @@ public class PostController {
         return postService.getPost(id);
     }
 
-    @PutMapping("posts/{postId}")
-    public PostResponse updatePost(@PathVariable("postId") Long id, @RequestBody PostUpdateRequest request) {
-        return postService.updatePost(id, request);
+    @PutMapping("posts")
+    public PostResponse updatePost(
+            @RequestPart(name = "request") PostUpdateRequest request,
+            @RequestPart(required = false, name = "imageFile") MultipartFile imageFile
+    ) throws IOException {
+        return postService.updatePost(request, imageFile);
     }
 
     @DeleteMapping("posts/{postId}")

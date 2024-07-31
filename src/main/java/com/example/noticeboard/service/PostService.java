@@ -9,6 +9,7 @@ import com.example.noticeboard.dto.response.PostResponse;
 import com.example.noticeboard.repository.PostRepository;
 import com.example.noticeboard.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -42,7 +43,14 @@ public class PostService {
         for (Post post : posts) {
             User user = post.getUser();
 
-            PostResponse postResponse = new PostResponse(post.getId(),post.getTitle(), post.getContent(), user.getUserName(),post.getImageUrl() ,post.getTime());
+            PostResponse postResponse = new PostResponse(
+                    post.getId(),
+                    post.getTitle(),
+                    post.getContent(),
+                    user.getUserName(),
+                    post.getImageUrl() ,
+                    post.getTime()
+            );
             postResponses.add(postResponse);
         }
 
@@ -88,9 +96,25 @@ public class PostService {
 
         return new PostAddResponse(post.getTitle(), post.getContent(), post.getImageUrl());
     }
+    @Transactional
+    public PostResponse updatePost(PostUpdateRequest request, MultipartFile imageFile) throws IOException {
+        Post post = postRepository.findById(request.getPostId()).orElseThrow(IllegalArgumentException::new);
+        String imageUrl = null;
+        if (imageFile != null) {
+            imageUrl = saveImage(imageFile);
+        }
+        post.setImageUrl(imageUrl);
+        post.setTitle(request.getTitle());
+        post.setContent(request.getContent());
 
-    public PostResponse updatePost(Long id, PostUpdateRequest request) {
-        return null;
+        return new PostResponse(
+                post.getId(),
+                post.getTitle(),
+                post.getContent(),
+                post.getUser().getUserName(),
+                post.getImageUrl(),
+                post.getTime()
+        );
     }
 
     public void deletePost(Long id) {
