@@ -1,6 +1,7 @@
 package com.example.noticeboard.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Slip {
 
     @Id
@@ -32,4 +34,9 @@ public class Slip {
 
     }
 
+    public Slip(User sndUser, User rcvUser, String content) {
+        this.sndUser = sndUser;
+        this.rcvUser = rcvUser;
+        this.content = content;
+    }
 }
