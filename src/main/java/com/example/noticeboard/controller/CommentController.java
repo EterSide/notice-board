@@ -1,6 +1,7 @@
 package com.example.noticeboard.controller;
 
 import com.example.noticeboard.dto.request.CommentAddRequest;
+import com.example.noticeboard.dto.response.CommentAddResponse;
 import com.example.noticeboard.service.CommentService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +15,7 @@ public class CommentController {
     }
 
     @PostMapping("comment/add")
-    public Long addComment(@RequestBody CommentAddRequest request) {
+    public CommentAddResponse addComment(@RequestBody CommentAddRequest request) {
         return commentService.addComment(request);
     }
 }

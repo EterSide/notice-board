@@ -4,6 +4,7 @@ import com.example.noticeboard.domain.Post;
 import com.example.noticeboard.domain.User;
 import com.example.noticeboard.dto.request.PostAddRequest;
 import com.example.noticeboard.dto.request.PostUpdateRequest;
+import com.example.noticeboard.dto.response.PostAddResponse;
 import com.example.noticeboard.dto.response.PostResponse;
 import com.example.noticeboard.repository.PostRepository;
 import com.example.noticeboard.repository.UserRepository;
@@ -75,7 +76,7 @@ public class PostService {
         return postResponses;
     }
 
-    public Long addPost(PostAddRequest request, MultipartFile imageFile) throws IOException {
+    public PostAddResponse addPost(PostAddRequest request, MultipartFile imageFile) throws IOException {
 
         String imageUrl = null;
         if (imageFile != null) {
@@ -85,7 +86,7 @@ public class PostService {
         User user = userRepository.findById(request.getUserId()).orElseThrow(IllegalArgumentException::new);
         Post post = postRepository.save(new Post(imageUrl, user, request.getContent(), request.getTitle()));
 
-        return post.getId();
+        return new PostAddResponse(post.getTitle(), post.getContent(), post.getImageUrl());
     }
 
     public PostResponse updatePost(Long id, PostUpdateRequest request) {

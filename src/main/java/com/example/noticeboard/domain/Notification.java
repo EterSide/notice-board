@@ -34,6 +34,10 @@ public class Notification {
         this.post = post;
         this.content = content;
     }
+
+    public boolean getIsRead() {
+        return isRead;
+    }
 }
 
 // Post

@@ -5,6 +5,7 @@ import com.example.noticeboard.domain.Notification;
 import com.example.noticeboard.domain.Post;
 import com.example.noticeboard.domain.User;
 import com.example.noticeboard.dto.request.CommentAddRequest;
+import com.example.noticeboard.dto.response.CommentAddResponse;
 import com.example.noticeboard.repository.CommentRepository;
 import com.example.noticeboard.repository.NotificationRepository;
 import com.example.noticeboard.repository.PostRepository;
@@ -29,7 +30,7 @@ public class CommentService {
         this.notificationRepository = notificationRepository;
     }
 
-    public Long addComment(CommentAddRequest request) {
+    public CommentAddResponse addComment(CommentAddRequest request) {
 
         User user = userRepository.findById(request.getUserId()).orElseThrow(IllegalArgumentException::new);
         Post post = postRepository.findById(request.getPostId()).orElseThrow(IllegalArgumentException::new);
@@ -44,11 +45,13 @@ public class CommentService {
 
         Comment comment = commentRepository.save(new Comment(request.getContent(), user, post,commentId));
         notificationRepository.save(new Notification(post.getUser(),post,"니 글에 댓글이 달렸습니다"));
-        return comment.getId();
-
-
-
-
+        return new CommentAddResponse(
+                comment.getId(),
+                comment.getPost().getId(),
+                comment.getContent(),
+                comment.getUser().getId(),
+                comment.getParentComment().getId()
+        );
     }
 
 }

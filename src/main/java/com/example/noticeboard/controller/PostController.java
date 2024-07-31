@@ -2,6 +2,7 @@ package com.example.noticeboard.controller;
 
 import com.example.noticeboard.dto.request.PostAddRequest;
 import com.example.noticeboard.dto.request.PostUpdateRequest;
+import com.example.noticeboard.dto.response.PostAddResponse;
 import com.example.noticeboard.dto.response.PostResponse;
 import com.example.noticeboard.service.PostService;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class PostController {
     }
 
     @PostMapping("posts")
-    public Long addPost(
+    public PostAddResponse addPost(
             @RequestPart(name = "request") PostAddRequest request,
             @RequestPart(required = false, name = "imageFile") MultipartFile imageFile
     ) throws IOException {
