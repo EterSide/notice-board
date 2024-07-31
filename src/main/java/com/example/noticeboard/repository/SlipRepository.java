@@ -9,5 +9,5 @@ import java.util.List;
 public interface SlipRepository extends JpaRepository<Slip, Long> {
 
     List<Slip> findByRcvUser(User user);
-
+    List<Slip> findBySndUser(User user);
 }

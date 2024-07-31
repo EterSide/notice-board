@@ -28,4 +28,9 @@ public class SlipController {
     public List<SlipResponse> getRcvSlips(@RequestParam Long userId) {
         return slipService.getRcvSlips(userId);
     }
+
+    @GetMapping("slips/sent")
+    public List<SlipResponse> getSntSlips(@RequestParam Long userId) {
+        return slipService.getSntSlips(userId);
+    }
 }

@@ -62,4 +62,24 @@ public class SlipService {
         return slipResponses;
     }
 
+    public List<SlipResponse> getSntSlips(Long userId) {
+
+        User user = userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
+        List<Slip> slips = slipRepository.findBySndUser(user);
+
+        List<SlipResponse> slipResponses = new ArrayList<>();
+
+        for (Slip slip : slips) {
+            SlipResponse slipResponse = new SlipResponse(
+                    slip.getId(),
+                    slip.getSndUser().getId(),
+                    slip.getContent(),
+                    slip.getTime()
+            );
+            slipResponses.add(slipResponse);
+        }
+
+        return slipResponses;
+    }
+
 }
