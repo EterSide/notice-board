@@ -6,9 +6,11 @@ import com.example.noticeboard.dto.response.NotificationResponse;
 import com.example.noticeboard.repository.NotificationRepository;
 import com.example.noticeboard.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotificationService {
@@ -40,6 +42,18 @@ public class NotificationService {
             notificationResponses.add(notificationResponse);
         }
         return notificationResponses;
+    }
+    @Transactional
+    public NotificationResponse readNotification(Long id) {
+        Notification notification = notificationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        notification.setRead(true);
+        return new NotificationResponse(
+                notification.getId(),
+                notification.getContent(),
+                notification.getIsRead(),
+                notification.getPost().getId(),
+                notification.getUser().getId()
+        );
     }
 
 }
