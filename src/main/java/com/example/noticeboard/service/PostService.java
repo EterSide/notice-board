@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,6 +27,11 @@ public class PostService {
     public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+    }
+
+    public PostResponse getPost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return new PostResponse(post.getId(), post.getTitle(), post.getContent(), post.getUser().getUserName(), post.getImageUrl(), post.getTime());
     }
 
     public List<PostResponse> getAllPosts() {

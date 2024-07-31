@@ -1,12 +1,8 @@
 package com.example.noticeboard.controller;
 
-import com.example.noticeboard.domain.Comment;
-import com.example.noticeboard.domain.Post;
 import com.example.noticeboard.dto.request.PostAddRequest;
-import com.example.noticeboard.dto.request.UserAddRequest;
 import com.example.noticeboard.dto.response.PostResponse;
 import com.example.noticeboard.service.PostService;
-import com.example.noticeboard.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,19 +10,15 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-public class MainController {
+public class PostController {
 
-    private final UserService userService;
     private final PostService postService;
 
-    public MainController(UserService userService, PostService postService) {
-        this.userService = userService;
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
-
-
-    @GetMapping("post")
+    @GetMapping("posts")
     public List<PostResponse> getAllPosts() {
         return postService.getAllPosts();
     }
@@ -35,12 +27,20 @@ public class MainController {
     public List<PostResponse> getSearchPosts(
             @RequestParam String searchType,
             @RequestParam String keyword
-                                    )
-    {
+    ) {
         return postService.getSearchPosts(searchType, keyword);
     }
 
+    @PostMapping("posts")
+    public Long addPost(
+            @RequestPart(name = "request") PostAddRequest request,
+            @RequestPart(required = false, name = "imageFile") MultipartFile imageFile
+    ) throws IOException {
+        return postService.addPost(request, imageFile);
+    }
 
-
-
+    @GetMapping("posts/{postId}")
+    public PostResponse getPost(@PathVariable("postId") Long id) {
+        return postService.getPost(id);
+    }
 }
