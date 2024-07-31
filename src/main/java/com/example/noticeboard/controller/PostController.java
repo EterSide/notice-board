@@ -1,6 +1,7 @@
 package com.example.noticeboard.controller;
 
 import com.example.noticeboard.dto.request.PostAddRequest;
+import com.example.noticeboard.dto.request.PostUpdateRequest;
 import com.example.noticeboard.dto.response.PostResponse;
 import com.example.noticeboard.service.PostService;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,15 @@ public class PostController {
     @GetMapping("posts/{postId}")
     public PostResponse getPost(@PathVariable("postId") Long id) {
         return postService.getPost(id);
+    }
+
+    @PutMapping("posts/{postId}")
+    public PostResponse updatePost(@PathVariable("postId") Long id, @RequestBody PostUpdateRequest request) {
+        return postService.updatePost(id, request);
+    }
+
+    @DeleteMapping("posts/{postId}")
+    public void deletePost(@PathVariable("postId") Long id) {
+        postService.deletePost(id);
     }
 }

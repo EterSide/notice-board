@@ -3,6 +3,7 @@ package com.example.noticeboard.service;
 import com.example.noticeboard.domain.Post;
 import com.example.noticeboard.domain.User;
 import com.example.noticeboard.dto.request.PostAddRequest;
+import com.example.noticeboard.dto.request.PostUpdateRequest;
 import com.example.noticeboard.dto.response.PostResponse;
 import com.example.noticeboard.repository.PostRepository;
 import com.example.noticeboard.repository.UserRepository;
@@ -85,6 +86,14 @@ public class PostService {
         Post post = postRepository.save(new Post(imageUrl, user, request.getContent(), request.getTitle()));
 
         return post.getId();
+    }
+
+    public PostResponse updatePost(Long id, PostUpdateRequest request) {
+        return null;
+    }
+
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
     }
 
     private String saveImage(MultipartFile imageFile) throws IOException {
