@@ -24,10 +24,7 @@ public class MainController {
         this.postService = postService;
     }
 
-    @PostMapping("user/add")
-    public Long addUser(@RequestBody UserAddRequest request) {
-         return userService.addUser(request);
-    }
+
 
     @GetMapping("post")
     public List<PostResponse> getAllPosts() {
